@@ -186,3 +186,25 @@ footer nav ul {
 	margin: 2em
 }
 
+.filtres{
+	display: flex;
+	gap: 1%;
+	justify-content: center;
+	margin-bottom: 30px;
+	
+}
+.btn-filtre{
+	color: #1D6154;
+	border: solid 1px #1D6154;
+	height: 37px;
+	padding: 0 20px 0 20px;
+	border-radius: 60px;
+	font-size: 16px;
+	font-family: 'Work Sans' ;
+}
+
+.btn-filtre:hover{
+	background-color:#1D6154 ;
+	color: white ;
+	transition: 230ms ease;
+}
