@@ -30,35 +30,37 @@ let categoryForm = "";
 let titleForm;
 
 // Fetch Works
-const fetchGet = async () => {
+const getWorks = async (categorieId = null) => {
   // lien avec l'API
-  await fetch("http://" + window.location.hostname + ":5678/api/works")
-    .then((res) => res.json().then((data) => (works = data)))
+  await fetch("http://localhost:5678/api/works")
+    .then((res) => res.json())
+    .then((works) => {
+       // Ajout des travaux
+      createWorks(works,categorieId);
+      createWorksModale(works);
+     
+    })    
     .catch((err) => {
       console.log(`Erreur : ${err}`);
     });
-  console.log(works[2]);
-
-  // Ajout des travaux
-  galleryWork(works);
-  workGallery(works);
 };
 
 // Fetch Catégories
-const fetchCategory = async () => {
-  await fetch("http://" + window.location.hostname + ":5678/api/categories")
-    .then((res) => res.json().then((cat) => (categories = cat)))
-    .catch((err) => {
-      console.log(`Erreur : ${err}`);
-    });
-
-  //Ajout des filtres
-  filtres(categories);
+const getCategories = async () => {
+  await fetch("http://localhost:5678/api/categories")
+  .then((res) => res.json())
+  .then((categories) => {
+    //Ajout des filtres
+    createCategories(categories);
+  })  
+  .catch((err) => {
+    console.log(`Erreur : ${err}`);
+  });
 };
 
 // Fetch suppression travaux
 const fetchDelete = async (id) => {
-  await fetch("http://" + window.location.hostname + ":5678/api/works/" + id, {
+  await fetch("http://localhost:5678/api/works/" + id, {
     method: "DELETE",
     headers: {
       accept: "application/json",
@@ -78,20 +80,68 @@ const fetchDelete = async (id) => {
 };
 
 // Implémente les Images dans la gallery
-function galleryWork(works) {
+function createWorks(works, categorieId) {
   works.map((work) => {
-    const post = document.createElement("figure");
-    post.setAttribute("id", `${work.id}.`);
-    post.innerHTML = `
-    <img src=${work.imageUrl} alt="image de ${work.title}">
-    <figcaption>${work.title}</figcaption> 
-    `;
-    gallery.appendChild(post);
+    if (categorieId == work.category.id || categorieId == null) {
+      const post = document.createElement("figure");
+      post.setAttribute("id", `${work.id}.`);
+      post.innerHTML = `
+      <img src=${work.imageUrl} alt="image de ${work.title}">
+      <figcaption>${work.title}</figcaption> 
+      `;
+      gallery.appendChild(post);
+    }
   });
 }
 
+// Créer les filtres
+function createCategories(categories) {
+  categories.map((filter) => {
+    filters.add(filter.name);
+  });
+
+  // Tranforme l'objet set en array
+  const filtersArray = Array.from(filters);
+  //Créer les éléments buttons
+  for (let i = 0; i < categories.length; i++) {
+    const filtre = document.createElement("button");
+    filtre.classList.add(
+      "filter-btn"     
+    );
+    filtre.innerText = categories[i].name;
+    filtre.setAttribute("categorieId", categories[i].id);
+    filtersContainer.appendChild(filtre);
+  }
+
+  //Filtre au clic
+  //Filtre pour le bouton Tous
+  const btnTous = document.getElementById("tous");
+  btnTous.addEventListener("click", () => {
+    gallery.innerHTML = "";
+    getWorks();
+  });
+
+  // Filtre pour les catégories suivantes
+  const buttons = document.querySelectorAll(".filter-btn");
+  buttons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      buttons.forEach((button) => button.classList.remove("active"));
+      gallery.innerHTML = "";
+      /*const workFiltered = works.filter((work) => {
+        return work.category.name === e.target.innerText;
+      });*/
+      button.classList.add("active");
+    
+      let categorieId = button.getAttribute("categorieId");
+      getWorks(categorieId);
+    });
+  });
+}
+
+
+
 // Ajout de la gallery dans la modale
-function workGallery(works) {
+function createWorksModale(works) {
   works.map((work) => {
     const workPost = document.createElement("figure");
     workPost.setAttribute("id", `${work.id}`);
@@ -106,49 +156,6 @@ function workGallery(works) {
     deleteImage(workPost);
   });
 }
-
-// Créer les filtres
-function filtres(categories) {
-  categories.map((filter) => {
-    filters.add(filter.name);
-  });
-
-  // Tranforme l'objet set en array
-  const filtersArray = Array.from(filters);
-  //Créer les éléments buttons
-  for (let i = 0; i < filtersArray.length; i++) {
-    const filtre = document.createElement("button");
-    filtre.classList.add(
-      "filter-btn",
-      `${filtersArray[i].split(" ").join("")}`
-    );
-    filtre.innerText = filtersArray[i];
-    filtersContainer.appendChild(filtre);
-  }
-
-  //Filtre au clic
-  //Filtre pour le bouton Tous
-  const btnTous = document.getElementById("tous");
-  btnTous.addEventListener("click", () => {
-    gallery.innerHTML = "";
-    fetchGet();
-  });
-
-  // Filtre pour les catégories suivantes
-  const buttons = document.querySelectorAll(".filter-btn");
-  buttons.forEach((button) => {
-    button.addEventListener("click", (e) => {
-      buttons.forEach((button) => button.classList.remove("active"));
-      gallery.innerHTML = "";
-      const workFiltered = works.filter((work) => {
-        return work.category.name === e.target.innerText;
-      });
-      button.classList.add("active");
-      galleryWork(workFiltered);
-    });
-  });
-}
-
 //Affiche le mode edition si connecté
 function editMode() {
   if (localStorage.login === "true") {
@@ -268,7 +275,7 @@ function addImage() {
           //Clear les galleries
           gallery.innerHTML = "";
           modalGallery.innerHTML = "";
-          fetchGet();
+          getWorks();
           addPicture.reset();
           previewImg.src = "";
           previewImg.style.setProperty("display", "none");
@@ -291,8 +298,12 @@ function addImage() {
   });
 }
 
-//Appel des différentes fonctions
-fetchGet();
-fetchCategory();
-editMode();
-addImage();
+function main(){
+  //Appel des différentes fonctions
+  getWorks();
+  getCategories();
+  editMode();
+  addImage();
+}
+
+main();

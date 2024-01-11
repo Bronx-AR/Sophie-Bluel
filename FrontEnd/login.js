@@ -14,7 +14,7 @@ let userLogins = {
 
 // Fonction Fetch POST pour le Login
 function fetchPost(userLogins) {
-  fetch(`http://${window.location.hostname}:5678/api/users/login`, {
+  fetch(`http://localhost:5678/api/users/login`, {
     method: "POST",
     headers: {
       accept: "application/json",
