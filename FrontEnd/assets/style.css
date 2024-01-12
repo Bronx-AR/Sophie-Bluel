@@ -351,10 +351,6 @@ footer nav ul {
 
 /* modal */
 
-.modal i {
-	color: #000000;
-}
-
 .modal-container {
 	/* display: none; */
 	visibility: hidden;
@@ -540,8 +536,6 @@ footer nav ul {
 	flex-direction: column;
 	gap: 20px;
 }
-
-
 
 .addImage-container {
 	background-color: #E8F1F7;
@@ -820,6 +814,7 @@ nav li a {
 	border-radius: 60px;
 	background: none;
 	transition: .4s ease-in-out;
+	cursor: pointer;
 }
 
 .active {
@@ -900,6 +895,7 @@ input[type="submit"] {
 	width: 180px;
 	text-align: center;
 	border-radius: 60px;
+	cursor: pointer;
 }
 
 footer nav ul {
