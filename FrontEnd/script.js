@@ -35,7 +35,6 @@ const apiUrls = {
   categories: 'http://localhost:5678/api/categories',
 };
 
-// Utilisez des fonctions fléchées pour rendre le code plus concis
 const fetchData = async (url, options) => {
   try {
     const response = await fetch(url, options);
@@ -48,6 +47,7 @@ const fetchData = async (url, options) => {
   }
 };
 
+//Fetch Works
 const getWorks = async (categorieId = null) => {
   try {
     const works = await fetchData(apiUrls.works);
@@ -58,6 +58,7 @@ const getWorks = async (categorieId = null) => {
   }
 };
 
+//Fetch Catégories
 const getCategories = async () => {
   try {
     const categories = await fetchData(apiUrls.categories);
@@ -67,6 +68,7 @@ const getCategories = async () => {
   }
 };
 
+//Fetch suppression travaux
 const fetchDelete = async (id) => {
   try {
     await fetch(`${apiUrls.works}/${id}`, {
@@ -90,6 +92,7 @@ const fetchDelete = async (id) => {
   }
 };
 
+//Implémente les Images dans la gallery
 function createWorks(works, categorieId) {
   works.map((work) => {
     if (categorieId == work.category.id || categorieId == null) {
@@ -104,11 +107,12 @@ function createWorks(works, categorieId) {
   });
 }
 
+// Créer les filtres
 function createCategories(categories) {
   categories.map((filter) => {
     filters.add(filter.name);
   });
-
+  //Transforme l'objet set en array
   const filtersArray = Array.from(filters);
 
   for (let i = 0; i < categories.length; i++) {
@@ -118,13 +122,14 @@ function createCategories(categories) {
     filtre.setAttribute('categorieId', categories[i].id);
     filtersContainer.appendChild(filtre);
   }
-
+  // Filtre au clic
+  //Filtre pour le bouton Tous
   const btnTous = document.getElementById('tous');
   btnTous.addEventListener('click', () => {
     gallery.innerHTML = '';
     getWorks();
   });
-
+  //Filtre pour les catégories suivantes
   const buttons = document.querySelectorAll('.filter-btn');
   buttons.forEach((button) => {
     button.addEventListener('click', (e) => {
@@ -138,6 +143,7 @@ function createCategories(categories) {
   });
 }
 
+// Ajout de la gallery dans la modale
 function createWorksModale(works) {
   works.map((work) => {
     const workPost = document.createElement('figure');
@@ -154,6 +160,7 @@ function createWorksModale(works) {
   });
 }
 
+// Affiche le mode edition si connecté
 function editMode() {
   if (localStorage.login === 'true') {
     filtersContainer.style.setProperty('visibility', 'hidden');
@@ -170,12 +177,14 @@ function editMode() {
   }
 }
 
+// Au clic sur "logout", supprime dans le local storage login: true et token
 function clearLocalStorageAndToggleLogin() {
   localStorage.removeItem('login');
   localStorage.removeItem('token');
   log.innerText = 'login';
 }
 
+// Affiche la modale
 function toggleModal() {
   modalContainer.classList.toggle('target');
 }
@@ -198,6 +207,7 @@ function returnModal1() {
   imgContainer.style.setProperty('display', 'flex');
 }
 
+// Au click sur la fleche retour de la modale, on revient à la modale précédente
 function handleReturnArrowClick() {
   returnModal1();
 }
@@ -208,6 +218,7 @@ modalTriggers.forEach((trigger) => trigger.addEventListener('click', toggleModal
 addPictureBtn.addEventListener('click', handleAddPictureBtnClick);
 returnArrow.addEventListener('click', handleReturnArrowClick);
 
+// Function suppression des travaux
 function deleteImage(imgValue) {
   const deleteIcon = document.querySelectorAll('.trash-icon');
   deleteIcon.forEach((delIcon) => {
@@ -227,7 +238,9 @@ function deleteImage(imgValue) {
   });
 }
 
+// Function ajout des images
 function addImage() {
+  // Image
   addImageModal.addEventListener('input', (e) => {
     imageForm = e.target.files[0];
     const img = URL.createObjectURL(imageForm);
@@ -235,15 +248,15 @@ function addImage() {
     previewImg.style.setProperty('display', 'block');
     imgContainer.style.setProperty('display', 'none');
   });
-
+  // Titre
   addTitle.addEventListener('input', (e) => {
     titleForm = e.target.value;
   });
-
+  // Catégories
   addCategorie.addEventListener('input', (e) => {
     categoryForm = e.target.selectedIndex;
   });
-
+  // Submit
   addPicture.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (imageForm && titleForm && categoryForm) {
