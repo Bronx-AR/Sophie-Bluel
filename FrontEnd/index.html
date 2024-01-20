@@ -1,152 +1,122 @@
 <!DOCTYPE html>
 <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sophie Bluel - Architecte d'intérieur</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <meta name="description" content="">
+        <link rel="stylesheet" href="./assets/style.css">
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Sophie Bluel - Architecte d'intérieur</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
-    <meta name="description" content="">
-    <link rel="stylesheet" href="./assets/style.css">
-    <script src="https://kit.fontawesome.com/2a4ae6f608.js" crossorigin="anonymous"></script>
-</head>
-
-<body>
-    <div class="modify-banner">
-        <div class="edit-title">
-            <i class="fa-regular fa-pen-to-square"></i>
-            <p>Mode édition</p>
+    <body>
+        <div class="edition">
+            <i class="fa-regular fa-pen-to-square"></i>&ensp;
+            <button class="mode">Mode édition</button>
         </div>
-    </div>
-    <header>
-        <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-        <nav>
-            <ul>
-                <li><a href="#portfolio">projets</a></li>
-                <li><a href="#contact">contact</a></li>
-                <li><a href="./login_page.html" class="log-link-title">login</a></li>
-                <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <div id="introduction">
-            <figure>
-                <img src="./assets/images/sophie-bluel.png" alt="Photo Sophie Bluel">
-            </figure>
-            <article>
-                <h2>Designer d'espace</h2>
-                <p>
-                    Je raconte votre histoire, je valorise vos idées. Je vous accompagne
-                    de la conception à la livraison finale du chantier.
-                </p>
-                <p>
-                    Chaque projet sera étudié en commun, de façon à mettre en valeur les
-                    volumes, les matières et les couleurs dans le respect de l’esprit
-                    des lieux et le choix adapté des matériaux. Le suivi du chantier
-                    sera assuré dans le souci du détail, le respect du planning et du
-                    budget.
-                </p>
-                <p>
-                    En cas de besoin, une équipe pluridisciplinaire peut être constituée
-                    : architecte DPLG, décorateur(trice)
-                </p>
-            </article>
-        </div>
-
-        <section id="portfolio">
-            <div class="portfolio-title">
+        <header>
+            <h1>Sophie Bluel<span>Architecte d'intérieur</span>
+            </h1>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#portfolio">projets</a>
+                    </li>
+                    <li>
+                        <a href="#contact">contact</a>
+                    </li>
+                    <li>
+                        <a href="./login_page.html" id="login">login</a>
+                    </li>
+                    <li>
+                        <img src="./assets/icons/instagram.png" alt="Instagram">
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div id="introduction">
+                <figure>
+                    <img src="./assets/images/sophie-bluel.png" alt="sophie-bluel">
+                    </button>
+                </figure>
+                <article>
+                    <h2>Designer d'espace</h2>
+                    <p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
+                    <p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
+                    <p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
+                </article>
+            </div>
+            <section id="portfolio">
                 <h2>Mes Projets</h2>
-                <div class="project-edit edit-btn modal-trigger">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                    <p>modifier</p>
-                </div>
-                <div class="modal-container">
-                    <div class="overlay modal-trigger"></div>
-                    <div class="modal">
-                        <button class="modal-trigger close-modal">
-                            <i class="fa-solid fa-xmark"></i>
+                <button class="modifier modifier3">
+                    <i class="fa-regular fa-pen-to-square"></i>&ensp;modifier
+                </button>
+                <div class="modalContainer">
+                    <div id="modal">
+                        <button class="close">
+                            <i class="fa-regular fa-xmark"></i>
                         </button>
-
-                        <div class="pictures-gallery">
-                            <h3 class="gallery-title">Galerie photo</h3>
-                            <p class="delete-msg"></p>
-                            <div class="modal-gallery">
-                                <div class="modal-gallery-work"></div>
+                        <h2>Galerie photo</h2>
+                        <div class="worksContainer"></div>
+                        <div class="separator"></div>
+                        <button class="addWork">Ajouter une photo</button>
+                    </div>
+                    <div id="modal2">
+                        <button class="back">
+                            <i class="fa-regular fa-arrow-left-long"></i>
+                        </button>
+                        <button class="close">
+                            <i class="fa-regular fa-xmark"></i>
+                        </button>
+                        <h2>Ajout photo</h2>
+                        <form action="#" method="post" id="sendImg">
+                            <div class="addImg">
+                                <i class="fa-regular fa-image"></i>
+                                <label for="uploadImg">+ Ajouter photo</label>
+                                <input type="file" id="uploadImg" onchange="previewImage(event)">
+                                <img id="preview">
+                                <p>jpg, png : 4mo max</p>
                             </div>
-                            <button class="addPicture-btn">Ajouter une photo</button>
-                            <p class="delete-gallery">Supprimer la galerie</p>
-                        </div>
-
-                        <div class="add-picture-gallery">
-                            <i class="fa-solid fa-arrow-left return-arrow"></i>
-                            <h3 class="add-title">Ajout photo</h3>
-                            <form class="addPictures">
-                                <div class="addImage-container">
-                                    <div class="img-container">
-                                        <i class="fa-regular fa-image image-icon"></i>
-                                        <label class="label-imageFile" for="file">+ Ajout photo</label>
-                                        <input class="btn-addImage" type="file" id="file" size="4000000">
-                                        <p class="file-type">jpg, png : 4mo max</p>
-                                    </div>
-                                    <img class="preview-img" src="#" alt="Preview">
-                                </div>
-                                <div class="input-container">
-                                    <label for="add-title">Titre</label>
-                                    <input type="text" id="add-title">
-                                </div>
-                                <div class="input-container">
-                                    <label for="add-categories">Catégorie</label>
-                                    <select name="categorie" id="add-categories">
-                                        <option id="0"></option>
-                                        <option id="1" class="categorie-select" value="Objets">
-                                            Objets
-                                        </option>
-                                        <option id="2" class="categorie-select" value="Appartements">
-                                            Appartements
-                                        </option>
-                                        <option id="3" class="categorie-select" value="Hotels_Restaurants">
-                                            Hôtels & Restaurants
-                                        </option>
-                                    </select>
-                                </div>
-                                <button type="submit" class="validate-btn">Valider</button>
-                            </form>
-                            <p class="error-add"></p>
-                        </div>
+                            <label for="titre">Titre</label>
+                            <input type="text" name="titre" id="titre">
+                            <label for="categorie">Catégorie</label>
+                            <select name="categorie" id="categorie">
+                                <option></option>
+                            </select>
+                            <div class="separator"></div>
+                            <button type="submit" class="valid">Valider</button>
+                        </form>
                     </div>
                 </div>
-            </div>
-            <div class="filters-container">
-                <button id="tous" class="filter-btn active">Tous</button>
-            </div>
-            <div class="gallery"></div>
-        </section>
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>Vous avez un projet ? Discutons-en !</p>
-            <form action="#" method="post">
-                <label for="name">Nom</label>
-                <input type="text" name="name" id="name">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email">
-                <label for="message">Message</label>
-                <textarea name="message" id="message" cols="30" rows="10"></textarea>
-                <input type="submit" value="Envoyer">
-            </form>
-        </section>
-    </main>
+                <div class="btns"></div>
+                <div class="gallery"></div>
+            </section>
+            <section id="contact">
+                <h2>Contact</h2>
+                <p>Vous avez un projet ? Discutons-en !</p>
+                <form action="#" method="post">
+                    <label for="name">Nom</label>
+                    <input type="text" name="name" id="name">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email">
+                    <label for="message">Message</label>
+                    <textarea name="message" id="message" cols="30" rows="10"></textarea>
+                    <input type="submit" value="Envoyer">
+                </form>
+            </section>
+        </main>
 
-    <footer>
-        <nav>
-            <ul>
-                <li>Mentions Légales</li>
-            </ul>
-        </nav>
-    </footer>
-    <script src="./script.js"></script>
-</body>
-
+        <footer>
+            <nav>
+                <ul>
+                    <li>Mentions Légales</li>
+                </ul>
+            </nav>
+        </footer>
+        <script src="./script.js"></script>
+    </body>
 </html>
