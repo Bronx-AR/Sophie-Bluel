@@ -16,6 +16,7 @@ const upTitle = document.getElementById('titre');
 const uploadImg = document.getElementById('uploadImg');
 const selectCategory = document.getElementById('categorie');
 const submitButton = document.querySelector('.valid');
+const messageError = document.querySelector(".message-error");
 let preview = document.getElementById('preview');
 
 // --- Récupération des projets de l'API ---
@@ -185,6 +186,7 @@ back.addEventListener('click', function () {
     modal2.style.display = 'none';
     preview.src = '';
     upTitle.value = '';
+    uploadImg.value = '';
 });
 
 // --- Récupération dynamique des catégories pour ajout de projet ---
@@ -201,24 +203,35 @@ getSelectCategory();
 
 // --- Conditions pour le bouton Valider ---
 const checkConditions = () => {
-    if (uploadImg.files[ 0 ] ?. size < 4000000 && upTitle.value !== '' && selectCategory.value !== '') {
+    if (uploadImg.files[0]?.size < 4000000 && upTitle.value !== '' && selectCategory.value !== '') {
+        // Ajout de la classe 'envoyer' si les conditions sont validées
         submitButton.classList.add('envoyer');
+        // Activation du bouton
+        submitButton.disabled = false;
     } else {
+        // Suppression de la classe 'envoyer' si les conditions ne sont pas validées
         submitButton.classList.remove('envoyer');
+        // Désactivation du bouton
+        submitButton.disabled = true;
     }
 };
+
+// Écouteurs d'événements pour les champs qui influent sur les conditions
 upTitle.addEventListener('input', checkConditions);
 selectCategory.addEventListener('input', checkConditions);
 uploadImg.addEventListener('input', checkConditions);
 
 // --- Requete POST pour envoyer un nouveau work ---
-submitButton.addEventListener('click', async ( e ) => {
+submitButton.addEventListener('click', async (e) => {
     e.preventDefault();
-    const formData = new FormData(document.getElementById('sendImg'));
-    formData.append('image', uploadImg.files[0]);
-    formData.append('title', upTitle.value );
-    formData.append('category', selectCategory.value );
-    if ( submitButton.classList.contains('envoyer') ) {
+
+    // Vérification si la classe 'envoyer' est présente
+    if (submitButton.classList.contains('envoyer')) {
+        const formData = new FormData(document.getElementById('sendImg'));
+        formData.append('image', uploadImg.files[0]);
+        formData.append('title', upTitle.value);
+        formData.append('category', selectCategory.value);
+
         const response = await fetch('http://localhost:5678/api/works', {
             method: 'POST',
             headers: {
@@ -235,11 +248,8 @@ submitButton.addEventListener('click', async ( e ) => {
         uploadImg.files[0] = '';
         preview.src = '';
     } else {
-        const error = document.createElement('p');
-        error.innerText = 'Titre, Catégorie, Taille < 4Mo requis';
-        error.style.textAlign = 'center';
-        error.style.color = 'red';
-        sendImg.appendChild(error);
+        // Affichage du message d'erreur si les conditions ne sont pas validées
+        messageError.innerText = "Titre, Catégorie, Taille < 4Mo requis";
     }
 });
 

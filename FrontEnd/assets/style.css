@@ -192,6 +192,9 @@ input[type="submit"]{
 	border-radius: 60px ;
 	cursor: pointer;
 }
+#submitButton[disabled] {
+    cursor: not-allowed;
+}
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
@@ -243,7 +246,11 @@ footer nav ul {
 	width: 180px;
 	margin: 37px auto 28px auto;
 }
-
+.message-error{
+	text-align: center;
+	color: red;
+	margin-bottom: 15px;
+}
 #login a {
 	text-align: center;
 	color: black;
